@@ -140,7 +140,7 @@
     //選択したrow番目の配列要素を削除する。
     NSInteger row = [indexPath row];
     [titleArry removeObjectAtIndex: row];
-    [contentsArry removeObjectAtIndex: row];
+    //[contentsArry removeObjectAtIndex: row];
     
     //セルが消えるアニメーション
     [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]  withRowAnimation:UITableViewRowAnimationFade];
