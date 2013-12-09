@@ -200,51 +200,26 @@
     //結果の取得(indexで取得)
     while ([rs next]) {
         //結果格納用のオブジェクト
-        
-        /*
-         Record *record = [[Record alloc]init];
-         record.columnOfId = [rs intForColumnIndex:0];
-         record.columnOfTitle = [NSString stringWithFormat:@"%d",[rs intForColumnIndex:1]];
-         
-         record.columnOfContents = nil;
-         record.columnOfText = [NSString stringWithFormat:@"%d",[rs intForColumnIndex:3]];
-         
-         record.columnOfRead = [rs intForColumnIndex:4];
-         record.columnOfRepeat  = [rs intForColumnIndex:5];
-         record.columnOfShadow = [rs intForColumnIndex:6];
-         */
-        
-        //from = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 1)];
-        //to = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 2)];
-        //message = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 3)];
-        
-        /*
-         NSDictionary *dict =
-         [NSDictionary dictionaryWithObjectsAndKeys:
-         [NSString stringWithFormat:@"%d",[rs intForColumnIndex:1]], @"Title",
-         [NSString stringWithFormat:@"%d",[rs intForColumnIndex:3]], @"Text",
-         nil];
-         */
+    
         NSDictionary *dict =
         [NSDictionary dictionaryWithObjectsAndKeys:
          [rs stringForColumn:@"id"], @"Id",
          [rs stringForColumn:@"title"], @"Title",
          [rs stringForColumn:@"textfield"], @"Text",
+         [rs stringForColumn:@"read"], @"Read",
          nil];
         
-        [result addObject:dict];  //MY PROBLEM..
+        [result addObject:dict];
         
-        //配列に格納
-        //[result addObject:record];
     }
-    //close ResultSet.
+
     [rs close];
     
     NSLog(@"result-1- = %@", result); //=> []
 	NSLog(@"result-1-.count = %d", [result count]); //=> 0
     
 	return result;
-	//return array;
+    
 }
 
 @end

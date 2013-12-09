@@ -23,7 +23,9 @@
 {
     @private
     NSMutableArray *titleArry;
-    NSMutableArray *contentsArry;
+    
+    NSMutableArray *contentsArray;
+
 }
 @synthesize tableView = _tableView; //<-synthesizeして、ゲッターとセッターを生成
 
@@ -57,8 +59,8 @@
     [super viewWillAppear:animated];
     
     titleArry = [[NSMutableArray alloc] init ]; //タイトルを格納するための可変配列
-    contentsArry = [[NSMutableArray alloc] init ]; //画像を格納するための可変配列
-    //test = [[NSMutableArray alloc] init ]; //画像を格納するための可変配列
+    //contentsArry = [[NSMutableArray alloc] init ]; //画像を格納するための可変配列
+    contentsArray = [[NSMutableArray alloc] init ]; //画像を格納するための可変配列
     
     
     [DataModels selectTitle:titleArry]; //titleフィールドを取り出す
@@ -66,7 +68,7 @@
     
     //[DataModels selectAll:record];
     
-    //[DataModels selectAll:test];
+    [DataModels selectAll:contentsArray];
     
     
     //NSLog(@"aa--%@",test);
@@ -98,14 +100,16 @@
     
     //セルに表示する内容
     cell.textLabel.text = [titleArry objectAtIndex:indexPath.row];
-    //cell.imageView.image = [[UIImage alloc] initWithData:[contentsArry objectAtIndex:indexPath.row]];
+
+    cell.textLabel.text = [titleArry objectAtIndex:indexPath.row];
     
-    //NSLog(@"test-%d",[test objectAtIndex:indexPath.row]);
-    //NSLog(@"test-id-%@",[[test objectAtIndex:indexPath.row] objectForKey:@"Id"]);
-    //NSLog(@"test-title-%@",[[test objectAtIndex:indexPath.row] objectForKey:@"Title"]);
-    //NSLog(@"test-text-%@",[[test objectAtIndex:indexPath.row] objectForKey:@"Text"]);
-    //cell.textLabel.text = [test objectAtIndex:indexPath.row];
+ 
     
+    
+    NSLog(@"test-id-%@",[[contentsArray objectAtIndex:indexPath.row] objectForKey:@"Id"]);
+    NSLog(@"test-title-%@",[[contentsArray objectAtIndex:indexPath.row] objectForKey:@"Title"]);
+    NSLog(@"test-text-%@",[[contentsArray objectAtIndex:indexPath.row] objectForKey:@"Text"]);
+    NSLog(@"test-read-%@",[[contentsArray objectAtIndex:indexPath.row] objectForKey:@"Read"]);
     
     
     return cell;
