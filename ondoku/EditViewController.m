@@ -16,11 +16,8 @@
 @implementation EditViewController
 {
 @private
-    NSMutableArray *titleArry;
-    NSMutableArray *contentsArry;
-    NSMutableArray *textArry;
-    NSMutableArray *idArry;
-    
+    NSMutableArray *contentsArray;
+
 }
 
 @synthesize memofield;
@@ -41,30 +38,18 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    titleArry = [[NSMutableArray alloc] init ];
-    contentsArry = [[NSMutableArray alloc] init ];
-    textArry = [[NSMutableArray alloc] init];
-    idArry  = [[NSMutableArray alloc] init];
+    contentsArray = [[NSMutableArray alloc] init];
     
-    [DataModels selectTitle:titleArry]; //titleArryにtitleカラムのデータを格納する
-    [DataModels selectText:textArry]; //textArryにtextfieldカラムのデータを格納
-    [DataModels selectId:idArry]; //unique id column
-
+    [DataModels selectAll:contentsArray];
+    
     // 前のTableViewで選択した行に応じて表示させる（セットされたrow_numをここで使う）
-    memofield.text = [titleArry objectAtIndex:row_num_2];
-    //photoImage.image = [[UIImage alloc] initWithData:[contentsArry objectAtIndex:row_num]];
-    textfield.text = [textArry objectAtIndex:row_num_2];
-    
-    NSLog(@"rownum-%d",row_num_2);
-    NSLog(@"rownum-id-%@",[idArry objectAtIndex:row_num_2]);
+    memofield.text = [[contentsArray objectAtIndex:row_num_2] objectForKey:@"Title"];
+    textfield.text = [[contentsArray objectAtIndex:row_num_2] objectForKey:@"Text"];
     
     //save button set
     // 右上の「Save」ボタン。押したら、save_memo_photoメソッドが実行される
     UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(mod_memo)];
     self.navigationItem.rightBarButtonItem = button;
-    
-    
-    
 }
 
 - (void)mod_memo
@@ -73,12 +58,12 @@
     if ([memofield.text length] > 0 && [textfield.text length] > 0) {
         
         //update
-        [DataModels updateContents:memofield.text Textfield:textfield.text Id:(NSUInteger)[idArry objectAtIndex:row_num_2]];
+        [DataModels updateContents:memofield.text Textfield:textfield.text Id:(NSUInteger)[[contentsArray objectAtIndex:row_num_2] objectForKey:@"Id"]];
         
         [self.navigationController popToRootViewControllerAnimated:YES];  //NavigationControllerのホームに戻る
         
     }else { // メモが書かれていない、あるいは写真が選択されていないとアラート
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"写真とメモ" message:@"写真を選んでメモを書いてね" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"メモ" message:@"メモを書く" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
         [av show];
     }
     

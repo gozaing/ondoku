@@ -41,10 +41,11 @@
     
     /*---TableViewの設置---*/
     _tableView = [[UITableView alloc] init];
-    _tableView.frame = CGRectMake(0, 0, 320, 460-44); //TableViewの大きさ
+//    _tableView.frame = CGRectMake(0, 0, 320, 460-44); //TableViewの大きさ
+    _tableView.frame = CGRectMake(0, 60, 320, 460-44); //TableViewの大きさ
     _tableView.dataSource = self;
     _tableView.delegate = self;
-    _tableView.rowHeight = 90.0; // セルの高さ
+    _tableView.rowHeight = 50.0; // セルの高さ
     [self.view addSubview:_tableView];
 
     
