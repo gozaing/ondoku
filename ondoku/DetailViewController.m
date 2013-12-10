@@ -18,10 +18,13 @@
 @implementation DetailViewController
 {
 @private
-    NSMutableArray *titleArry;
-    NSMutableArray *contentsArry;
-    NSMutableArray *textArry;
-    NSMutableArray *idArry;
+    //NSMutableArray *titleArry;
+    //NSMutableArray *contentsArry;
+    //NSMutableArray *textArry;
+    //NSMutableArray *idArry;
+    
+    NSMutableArray *contentsArray;
+    
 }
 
 @synthesize row_num;
@@ -43,17 +46,30 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    titleArry = [[NSMutableArray alloc] init ];
-    textArry = [[NSMutableArray alloc] init];
-    idArry  = [[NSMutableArray alloc] init];
+    //titleArry = [[NSMutableArray alloc] init ];
+    //textArry = [[NSMutableArray alloc] init];
+    //idArry  = [[NSMutableArray alloc] init];
     
-    [DataModels selectTitle:titleArry]; //titleArryにtitleカラムのデータを格納する
-    [DataModels selectText:textArry]; //textArryにtextfieldカラムのデータを格納
-    [DataModels selectId:idArry]; //unique id column
+    contentsArray  = [[NSMutableArray alloc] init];
+    
+    
+    //[DataModels selectTitle:titleArry]; //titleArryにtitleカラムのデータを格納する
+    //[DataModels selectText:textArry]; //textArryにtextfieldカラムのデータを格納
+    //[DataModels selectId:idArry]; //unique id column
+    
+    [DataModels selectAll:contentsArray];
+    
     
     // 前のTableViewで選択した行に応じて表示させる（セットされたrow_numをここで使う）
-    titleLabel.text = [titleArry objectAtIndex:row_num];
-    textField.text = [textArry objectAtIndex:row_num];
+    //titleLabel.text = [titleArry objectAtIndex:row_num];
+    //textField.text = [textArry objectAtIndex:row_num];
+    
+    titleLabel.text = [[contentsArray objectAtIndex:row_num] objectForKey:@"Title"];
+    textField.text = [[contentsArray objectAtIndex:row_num] objectForKey:@"Text"];
+    
+    
+    
+    
     
     // 右上の「Save」ボタン。押したら、save_memo_photoメソッドが実行される
     UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(mod_text)];
@@ -78,9 +94,13 @@
 - (IBAction)countUpDidPush:(UIButton *)sender {
     
     NSLog(@"countUpDidPush->%d",sender.tag);
-    //[DataModels updateCount:aa Id:[idArry objectAtIndex:row_num]];
-    [DataModels updateCount:(NSInteger)sender.tag Id:(NSInteger)[idArry objectAtIndex:row_num]];
+//    [DataModels updateCount:(NSInteger)sender.tag Id:(NSInteger)[idArry objectAtIndex:row_num]];
     
+    [DataModels updateCount:(NSInteger)sender.tag Id:(NSInteger)[[contentsArray objectAtIndex:row_num] objectForKey:@"Id"]];
+
+    
+
+
 }
 
 
