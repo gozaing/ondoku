@@ -22,8 +22,6 @@
 @implementation ViewController
 {
     @private
-    NSMutableArray *titleArry;
-    
     NSMutableArray *contentsArray;
 
 }
@@ -58,32 +56,15 @@
 {
     [super viewWillAppear:animated];
     
-    titleArry = [[NSMutableArray alloc] init ]; //タイトルを格納するための可変配列
-    //contentsArry = [[NSMutableArray alloc] init ]; //画像を格納するための可変配列
     contentsArray = [[NSMutableArray alloc] init ]; //画像を格納するための可変配列
-    
-    
-    [DataModels selectTitle:titleArry]; //titleフィールドを取り出す
-    //[DataModels selectContents:contentsArry]; //contentsフィールドを取り出す
-    
-    //[DataModels selectAll:record];
-    
     [DataModels selectAll:contentsArray];
-    
-    
-    //NSLog(@"aa--%@",test);
-    
-    
-    //NSLog(@"test.count = %d", [test count]); //=> 0
-    //NSLog(@"titleArry.count = %d", [titleArry count]); //=> 0
-    
     
     [_tableView reloadData]; //テーブルをリロードして更新
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return titleArry.count;
+    return contentsArray.count;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -99,9 +80,9 @@
     }
     
     //セルに表示する内容
-    cell.textLabel.text = [titleArry objectAtIndex:indexPath.row];
+    //cell.textLabel.text = [titleArry objectAtIndex:indexPath.row];
 
-    cell.textLabel.text = [titleArry objectAtIndex:indexPath.row];
+    cell.textLabel.text = [[contentsArray objectAtIndex:indexPath.row] objectForKey:@"Title"];
     
  
     
@@ -121,7 +102,7 @@
     // セルの選択を解除する
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    for (int i = 0; i < titleArry.count; i++) {
+    for (int i = 0; i < contentsArray.count; i++) {
         if (indexPath.row == i) {
             DetailViewController *dvc = [[DetailViewController alloc] initWithNibName:@"DetailViewController" bundle:nil];
             dvc.row_num = i; // どの行を選んだのか、次のViewControllerに値を受け渡ししている。
@@ -143,8 +124,7 @@
 {
     //選択したrow番目の配列要素を削除する。
     NSInteger row = [indexPath row];
-    [titleArry removeObjectAtIndex: row];
-    //[contentsArry removeObjectAtIndex: row];
+    [contentsArray removeObjectAtIndex: row];
     
     //セルが消えるアニメーション
     [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]  withRowAnimation:UITableViewRowAnimationFade];
@@ -154,8 +134,8 @@
     [DataModels drop_table];
     
     //titleArryとcontentsArryは、すでに要素が削除されていて、残りの要素がつめられている状態。そしてインサートしている。
-    for (int i = 0; i < titleArry.count; i++ ) {
-        [DataModels insertTitle:[titleArry objectAtIndex:i] Textfield:@"aa"];
+    for (int i = 0; i < contentsArray.count; i++ ) {
+        [DataModels insertTitle:[contentsArray objectAtIndex:i] Textfield:@"aa"];
     }
 }
 
