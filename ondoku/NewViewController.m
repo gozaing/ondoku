@@ -12,6 +12,9 @@
 
 @interface NewViewController ()
 
+// 2013/12/11
+@property(nonatomic, strong) UITapGestureRecognizer *singleTap;
+
 @end
 
 @implementation NewViewController
@@ -43,6 +46,14 @@
     self.navigationItem.rightBarButtonItem = button;
     
     titleField.delegate = self; //<-追加
+    
+    //2013/12/11
+    //add gesture
+    self.singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onSingleTap:)];
+    self.singleTap.delegate = self;
+    self.singleTap.numberOfTapsRequired = 1;
+    [self.view addGestureRecognizer:self.singleTap];
+    
 }
 
 - (void)save_memo_photo
@@ -58,6 +69,22 @@
         UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"メモ" message:@"メモを書いて" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
         [av show];
     }
+}
+
+-(void)onSingleTap:(UITapGestureRecognizer *)recognizer {
+    [self.textField resignFirstResponder];
+}
+
+-(BOOL) gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if (gestureRecognizer == self.singleTap) {
+        // キーボード表示中のみ有効
+        if (self.textField.isFirstResponder) {
+            return YES;
+        } else {
+            return NO;
+        }
+    }
+    return YES;
 }
 
 

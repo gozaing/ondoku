@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NewViewController : UIViewController <UIActionSheetDelegate,UITextFieldDelegate> //<-宣言
-
+@interface NewViewController : UIViewController <UIActionSheetDelegate,UITextFieldDelegate,UIGestureRecognizerDelegate> //<-宣言
 
 @property (weak, nonatomic) IBOutlet UITextField *titleField;
 @property (weak, nonatomic) IBOutlet UITextView *textField;

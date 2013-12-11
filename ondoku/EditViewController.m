@@ -62,7 +62,6 @@
     self.singleTap.numberOfTapsRequired = 1;
     [self.view addGestureRecognizer:self.singleTap];
     
-    
 }
 
 - (void)mod_memo
@@ -96,8 +95,6 @@
     }
     return YES;
 }
-
-
 
 - (void)didReceiveMemoryWarning
 {
