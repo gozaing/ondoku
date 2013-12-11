@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EditViewController : UIViewController
+@interface EditViewController : UIViewController <UITextFieldDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic,assign) NSInteger row_num_2; //<-この使い方不明
 @property (weak, nonatomic) IBOutlet UITextField *memofield;
