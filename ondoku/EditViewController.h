@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EditViewController : UIViewController <UITextFieldDelegate, UIGestureRecognizerDelegate>
-
+@interface EditViewController : UIViewController <UITextFieldDelegate, UIGestureRecognizerDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
+{
+    UIPickerView *picker;
+}
 @property (nonatomic,assign) NSInteger row_num_2; //<-この使い方不明
 @property (weak, nonatomic) IBOutlet UITextField *memofield;
 @property (weak, nonatomic) IBOutlet UITextView *textfield;
+
+@property (weak, nonatomic) IBOutlet UITextField *countText;
 
 @end
